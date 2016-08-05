@@ -1,0 +1,25 @@
+{% include "shared/header.html" %}
+<div class="container" ng-controller="AddEventController">
+    {% raw %}
+    <h1>Write your review for {{restaurant_by_id[params.ID].name}}</h1>
+    
+    <span mathjax-bind="expression"></span>
+    
+    <uib-rating ng-model="myrating" max="max" read-only="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"
+    titles="['one','two','three']" aria-labelledby="default-rating"></uib-rating>
+   
+    <textarea class="form-control" rows="5" ng-model="review" read-only="restaurat_ratings[params.ID].rated_by_user"></textarea>
+    
+    <div class="alert alert-warning" ng-show = "restaurat_ratings[params.ID].rated_by_user">
+        <strong>You have already rated {{restaurant_by_id[params.ID].name}}</strong>
+    </div>
+
+    <div class="container" ng-repeat="x in refratings.$getRecord(params.ID)">
+        <h4>{{x.user}} rated {{restaurant_by_id[params.ID].name}} with {{x.myrating}}</h4> {{x.review}}
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block" ng-click="submitRating(myrating,review,params.ID)">Submit Rating</button>
+    <!--<button type="submit" class="btn btn-primary btn-block" ng-click="submitReview(myrating,review,params.ID)">Submit Review</button>-->
+    {% endraw %}
+</div>
+<!-- /container -->

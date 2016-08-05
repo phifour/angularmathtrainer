@@ -1,0 +1,54 @@
+{% include "shared/header.html" %}
+<div class="container" ng-controller="DoAssignmentController">
+    {% raw %}
+    <h1>Your assignment {{params.ID}}</h1>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name of assignment</th>
+                <th>Problem</th>
+                <th>Points</th>
+                <th>Possible solutions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="problem in myassignments.$getRecord(params.ID).problems">
+                <td>
+                    <h4>{{problem['name']}}</h4>
+                </td>
+                <td>
+                    <span mathjax-bind="problem.text"></span>
+                </td>
+                <td>
+                    {{problem.points}}
+                </td>
+                <td>
+
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr ng-repeat="solution in problem.solutions">
+                                <td>
+                                    <span mathjax-bind="solution.eqn"></span>
+                                </td>
+                                <td>
+                                    <input type="checkbox" ng-model="mysolution['problem' + myassignments.$getRecord(params.ID).problems.indexOf(problem) + 'solution' + $index].rightanswer"
+                                    ng-init="mysolution['problem' + myassignments.$getRecord(params.ID).problems.indexOf(problem) + 'solution' + $index].rightanswer = false">Correct?
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+
+    <button type="submit" class="btn btn-primary btn-block" ng-click="submitassignment(params.ID,mysolution)">Submit your assignment</button>
+
+   {% endraw %}
+</div>
+<!-- /container -->

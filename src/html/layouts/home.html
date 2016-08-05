@@ -1,0 +1,45 @@
+{% include "shared/header.html" %}
+
+<div class="container" ng-controller="AddEventController">
+    <center>
+        <h2>Math assignments</h2></center>
+    {% raw %}
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th><a href="" ng-click="orderByField='name'; reverseSort = !reverseSort">Name of assignment</a></th>
+                    <th><a href="" ng-click="orderByField='address'; reverseSort = !reverseSort">Creator</a></th>
+                    <th><a href="" ng-click="orderByField='rating'; reverseSort = !reverseSort">Rating on Foursquare</a></th>
+                    <th><a href="" ng-click="orderByField='rating'; reverseSort = !reverseSort">Grade</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="assignment in assignments|filter:search.name| orderBy:orderByField:reverseSort">
+                    <td>
+                        <a href="{{restaurant.link}}">
+                            <h4>{{assignment['name']}}</h4>
+                        </a>
+                    </td>
+                    <td>
+                        <span mathjax-bind="assignment.eqn"></span>
+                        <h5>{{restaurant['address']}}</h5></td>
+                    <td>
+                        <h5>{{restaurant['rating']}}</h5></td>
+                    <td>
+                        <a href="#/eventdetails/{{restaurant.id}}">Rate {{restaurant.name}}</a>
+                        <h5>{{showRating(restaurat_ratings[restaurant.id].rating,restaurat_ratings[restaurant.id].nratings)}}</h5>                                                
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% endraw %} {% raw %}
+    <div ng-repeat="chart in charts" class="container">
+        <h1>{{chart}}</h1>
+        <barchart></barchart>
+        <div id="{{chart}}"></div>
+    </div>
+    {% endraw %}
+
+    </div>

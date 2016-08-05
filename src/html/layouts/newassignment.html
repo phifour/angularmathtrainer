@@ -1,0 +1,114 @@
+{% include "shared/header.html" %}
+<div class="container" ng-controller="NewAssignmentController">
+    {% raw %}
+
+    <h1>Create an assignment</h1>
+
+    <form class="form-inline" role="form">
+        <div class="form-group">
+            <label for="assignmentname">Name of assignment:</label>
+            <input type="text" class="form-control" id="assignmentname" ng-model="assignment.name">
+        </div>
+    </form>
+
+    <h4>Add problems to your assignment</h4>
+    <h2>Problem description<h2>    
+            <textarea class="form-control" rows="3" ng-model="problem.text"></textarea>
+            <h2>Rate difficulty of problem</h2>
+    <uib-rating ng-model="problem.points" max="max" read-only="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"
+    titles="['one','two','three']" aria-labelledby="default-rating"></uib-rating>
+
+    <h2>Enter problem in LaTeX</h2>
+
+    <textarea class="form-control" rows="5" ng-model="problem.eqn"></textarea>
+
+    <span mathjax-bind="problem.eqn"></span>
+
+    <h4>Add possible solutions to your problem</h4>
+    <textarea class="form-control" rows="2" ng-model="solution.eqn"></textarea>
+    <button type="submit" class="btn btn-primary btn-block" ng-click="submitpossiblesulution(solution)">Submit Possible solution</button>
+
+    <hr>
+
+    <h4>Problem Preview</h4>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Problem</th>
+                <th>Solution candidate</th>
+                <th>Correct</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="solution in problem.solutions">
+                <td>
+                    <span mathjax-bind="problem.eqn"></span>
+                </td>
+                <td>
+                    <span mathjax-bind="solution.eqn"></span>
+                </td>
+                <td>
+                    <input type="checkbox" ng-model="solution.rightanswer" ng-init="solution.rightanswer = false">Is correct answer
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary btn-block" ng-click="remove(problems,problem)">Remove</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary btn-block" ng-click="submitproblem(problem)">Add problem to assignment</button>
+
+    <h2>Assignment preview</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Problem Nr.</th>
+                <th>Problem</th>
+                <th>Points</th>
+                <th>Possible solutions</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="problem in problems">
+                <td>
+                    <h4>Problem{{$index}}</h4>
+                </td>
+                <td>
+                    <span mathjax-bind="problem.eqn"></span>
+                </td>
+                <td>
+                    {{problem.points}}
+                </td>
+                <td>
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr ng-repeat="solution in problem.solutions">
+                                <td>
+                                    <span mathjax-bind="solution.eqn"></span>
+                                </td>
+                                <td>
+                                    {{solution.rightanswer}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-primary btn-block" ng-click="remove(problems,problem)">Remove</button>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+
+
+
+    <button type="submit" class="btn btn-primary btn-block" ng-click="submitassignment()">Submit Assignment</button>
+
+    {% endraw %}
+</div>
+<!-- /container -->
